@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { profile } from "../data/profile.js";
 
 const navigation = [
   { href: "/", label: "Home" },
@@ -18,7 +19,9 @@ export default function SiteFooter() {
             </Link>
           ))}
         </nav>
-        <p>© 2024 John Doe. All rights reserved.</p>
+        <p>
+          © {new Date().getFullYear()} {profile.name}. All rights reserved.
+        </p>
       </div>
     </footer>
   );

@@ -24,6 +24,7 @@ export default [
       globals: {
         ...globals.browser,
         ...globals.es2021,
+        process: "readonly",
       },
       parserOptions: {
         ecmaFeatures: {

@@ -2,6 +2,7 @@ import { Roboto } from "next/font/google";
 import "./globals.css";
 import SiteFooter from "../components/SiteFooter.jsx";
 import SiteHeader from "../components/SiteHeader.jsx";
+import { profile } from "../data/profile.js";
 
 const roboto = Roboto({
   weight: ["400", "700"],
@@ -12,10 +13,10 @@ const roboto = Roboto({
 
 export const metadata = {
   title: {
-    default: "Jane Doe — Software Engineer",
-    template: "%s | Jane Doe",
+    default: `${profile.name} — Portfolio`,
+    template: `%s | ${profile.name}`,
   },
-  description: "The portfolio of Jane Doe, a software engineer in New York City.",
+  description: `The portfolio of ${profile.name}, a computer science student at Ensign College.`,
 };
 
 export default function RootLayout({ children }) {
