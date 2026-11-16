@@ -1,6 +1,13 @@
-# Portfolio Template
+# Michelle Christiansen — Portfolio
 
-A responsive four-page portfolio built with Next.js, Tailwind CSS, and the linked Figma design.
+Live site: https://mlc273.github.io/portfolio
+
+A responsive four-page portfolio built with Next.js and Tailwind CSS, published with GitHub Pages.
+
+- **Edit your content** in `src/data/profile.js` (bio, work history, projects, tools).
+- **Assignment One** is the first version of this site, saved as plain files in `public/assignment-one/`
+  and linked from the header. It's a frozen copy, so changes to `src/` don't affect it.
+- **Deploys** run automatically through `.github/workflows/deploy.yml` on every push to `main`.
 
 ## Getting Started
 
@@ -29,4 +36,3 @@ npm run build
 npm run start
 ```
 
-The newsletter form currently provides client-side feedback; connect it to a mailing-list provider before using it for subscriptions.

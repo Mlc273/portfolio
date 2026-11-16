@@ -1,70 +1,103 @@
 import Link from "next/link";
-import Avatar from "../components/Avatar.jsx";
-import NewsletterForm from "../components/NewsletterForm.jsx";
+import Photo from "../components/Photo.jsx";
 import SocialLinks from "../components/SocialLinks.jsx";
-import { notes, profile, skills, work } from "../data/profile.js";
+import WorkTimeline from "../components/WorkTimeline.jsx";
+import { highlights, notes, profile, skills } from "../data/profile.js";
 
 export const metadata = {
   title: { absolute: `${profile.name} — Portfolio` },
-  description: `Notes, projects, and ideas from ${profile.name}, a computer science student.`,
+  description: `Notes, projects, and experience from ${profile.name}, a computer science student.`,
 };
 
-const cardClasses =
-  "rounded-2xl border border-zinc-100 bg-white p-5 shadow-sm dark:border-white/10 dark:bg-zinc-900/70";
-
-function WorkCard() {
+function Hero() {
   return (
-    <section className={cardClasses}>
-      <h2 className="mb-4 flex items-center gap-2 text-sm font-semibold">
-        <span aria-hidden="true" className="text-zinc-400">
-          ▱
-        </span>
-        Work
-      </h2>
-      <p className="mb-5 text-xs leading-5 text-zinc-500 dark:text-zinc-400">
-        Decades of serving people, managing money, and running a business.
-      </p>
-      <ul className="space-y-4">
-        {work.map(({ name, detail, years, mark, tone }) => (
-          <li className="flex items-center gap-3" key={name}>
-            <span
-              className={`${tone} grid h-8 w-8 shrink-0 place-items-center rounded-lg text-[10px] font-bold text-white`}
-            >
-              {mark}
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="text-xs font-semibold">{name}</p>
-              <p className="mt-0.5 text-[9px] uppercase tracking-wide text-zinc-400">{detail}</p>
-            </div>
-            <span className="whitespace-nowrap text-[9px] text-zinc-400">{years}</span>
-          </li>
-        ))}
-      </ul>
+    <section className="container-page grid items-center gap-12 pb-16 pt-12 sm:pt-16 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] lg:gap-16 lg:pb-24 lg:pt-20">
+      <div>
+        <p className="eyebrow">
+          {profile.role} · {profile.location}
+        </p>
+        <h1 className="mt-5 text-balance font-display text-[2.5rem] font-semibold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.6rem]">
+          {profile.headline}
+        </h1>
+        <p className="mt-6 max-w-xl text-lg leading-relaxed text-stone-700 sm:text-xl sm:leading-relaxed dark:text-stone-300">
+          {profile.intro}
+        </p>
+        <div className="mt-8 flex flex-wrap gap-3">
+          <Link className="btn-primary" href="/about/">
+            More about me
+          </Link>
+          <Link className="btn-secondary" href="/projects/">
+            See my projects
+          </Link>
+        </div>
+        <SocialLinks className="mt-6" />
+      </div>
+      <Photo className="mx-auto w-full max-w-sm lg:max-w-none" priority />
     </section>
   );
 }
 
-function SkillsCard() {
+function Highlights() {
   return (
-    <section className={cardClasses}>
-      <h2 className="mb-3 flex items-center gap-2 text-sm font-semibold">
-        <span aria-hidden="true" className="text-zinc-400">
-          ⌁
-        </span>
+    <section aria-label="Highlights" className="container-page">
+      <dl className="grid gap-px overflow-hidden rounded-3xl border border-stone-200 bg-stone-200 sm:grid-cols-3 dark:border-white/10 dark:bg-white/10">
+        {highlights.map(({ value, label }) => (
+          <div className="flex flex-col-reverse bg-white px-6 py-7 sm:px-8 dark:bg-ink" key={label}>
+            <dt className="mt-2 text-[0.95rem] leading-snug text-stone-700 dark:text-stone-300">{label}</dt>
+            <dd className="font-display text-4xl font-semibold text-teal-700 sm:text-5xl dark:text-teal-300">
+              {value}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+  );
+}
+
+function Notes() {
+  return (
+    <section aria-labelledby="notes-heading">
+      <p className="eyebrow">Notes</p>
+      <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight" id="notes-heading">
+        What I&apos;m learning
+      </h2>
+      <div className="mt-8 space-y-5">
+        {notes.map(({ id, title, excerpt }) => (
+          <article className="card" id={id} key={id}>
+            <h3 className="text-xl font-semibold leading-snug">{title}</h3>
+            <p className="mt-3 leading-relaxed text-stone-700 dark:text-stone-300">{excerpt}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function Skills() {
+  return (
+    <section aria-labelledby="skills-heading" className="card">
+      <h2 className="text-xl font-semibold" id="skills-heading">
         Skills
       </h2>
-      <p className="mb-5 text-xs leading-5 text-zinc-500 dark:text-zinc-400">
+      <p className="mt-2 text-stone-600 dark:text-stone-400">
         Strengths from my career, and the coding skills I&apos;m growing.
       </p>
-      <ul className="space-y-4">
+      <ul className="mt-6 space-y-5">
         {skills.map(({ label, value }) => (
           <li key={label}>
-            <div className="mb-1.5 flex justify-between text-[10px]">
-              <span>{label}</span>
-              <span className="text-zinc-400">{value}</span>
+            <div className="mb-2 flex justify-between text-[0.95rem]">
+              <span className="font-medium">{label}</span>
+              <span className="tabular-nums text-stone-600 dark:text-stone-400">{value}%</span>
             </div>
-            <div className="h-2.5 overflow-hidden rounded-sm bg-zinc-200 dark:bg-zinc-700">
-              <div className="h-full rounded-sm bg-teal-500" style={{ width: value }} />
+            <div
+              aria-label={`${label}: ${value}%`}
+              aria-valuemax={100}
+              aria-valuemin={0}
+              aria-valuenow={value}
+              className="h-2.5 overflow-hidden rounded-full bg-stone-200 dark:bg-white/10"
+              role="meter"
+            >
+              <div className="h-full rounded-full bg-teal-600 dark:bg-teal-300" style={{ width: `${value}%` }} />
             </div>
           </li>
         ))}
@@ -75,51 +108,26 @@ function SkillsCard() {
 
 export default function Home() {
   return (
-    <div className="mx-auto w-full max-w-5xl px-6 pb-12 pt-7 sm:px-8 sm:pt-10">
-      <section className="max-w-2xl">
-        <Avatar size="sm" />
-        <h1 className="mt-4 max-w-lg text-2xl font-bold leading-tight tracking-tight sm:text-3xl">
-          {profile.headline}
-        </h1>
-        <p className="mt-4 max-w-xl text-sm leading-6 text-zinc-600 dark:text-zinc-300">{profile.intro}</p>
-        <SocialLinks />
-      </section>
-
-      <div className="mt-12 grid gap-10 lg:grid-cols-[minmax(0,1.35fr)_minmax(270px,0.8fr)] lg:gap-14">
-        <section aria-label="Recent notes" className="space-y-9">
-          {notes.map(({ id, date, title, excerpt }) => (
-            <article id={id} key={id}>
-              <p className="text-[11px] text-zinc-400">{date}</p>
-              <h2 className="mt-2 text-sm font-semibold">{title}</h2>
-              <p className="mt-2 line-clamp-3 text-xs leading-5 text-zinc-600 dark:text-zinc-400">{excerpt}</p>
-            </article>
-          ))}
-          <Link
-            className="inline-flex items-center gap-1 text-[11px] font-semibold text-teal-600 transition hover:text-teal-700 dark:text-teal-300 dark:hover:text-teal-200"
-            href="/projects"
-          >
-            See my projects <span aria-hidden="true">›</span>
-          </Link>
-        </section>
-
-        <aside className="space-y-5">
-          <section className={cardClasses}>
-            <h2 className="flex items-center gap-2 text-sm font-semibold">
-              <svg aria-hidden="true" className="text-zinc-400" fill="none" height="16" viewBox="0 0 24 24" width="16">
-                <rect height="15" rx="2" stroke="currentColor" strokeWidth="1.6" width="20" x="2" y="4.5" />
-                <path d="m3 6 9 7 9-7" stroke="currentColor" strokeWidth="1.6" />
-              </svg>
-              Stay up to date
+    <>
+      <Hero />
+      <Highlights />
+      <div className="container-page mt-20 grid gap-14 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,0.8fr)] lg:gap-16">
+        <Notes />
+        <div className="space-y-8">
+          <section aria-labelledby="work-heading" className="card">
+            <h2 className="text-xl font-semibold" id="work-heading">
+              Recent work
             </h2>
-            <p className="my-3 text-xs leading-5 text-zinc-500 dark:text-zinc-400">
-              Get notified when I publish something new, and unsubscribe at any time.
-            </p>
-            <NewsletterForm />
+            <div className="mt-6">
+              <WorkTimeline limit={3} showSummary={false} />
+            </div>
+            <Link className="link mt-6 inline-block" href="/about/">
+              Full work history
+            </Link>
           </section>
-          <WorkCard />
-          <SkillsCard />
-        </aside>
+          <Skills />
+        </div>
       </div>
-    </div>
+    </>
   );
 }

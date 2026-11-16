@@ -1,63 +1,63 @@
-import Avatar from "../../components/Avatar.jsx";
-import { icons, socialLinks } from "../../data/social.jsx";
+import PageIntro from "../../components/PageIntro.jsx";
+import Photo from "../../components/Photo.jsx";
+import SocialLinks from "../../components/SocialLinks.jsx";
+import WorkTimeline from "../../components/WorkTimeline.jsx";
 import { education, hobbies, profile } from "../../data/profile.js";
 
 export const metadata = {
   title: "About",
-  description: `A little more about ${profile.name} and the work behind this portfolio.`,
+  description: `A little more about ${profile.name}: work history, education, and life outside of work.`,
 };
 
 export default function About() {
   return (
-    <div className="mx-auto w-full max-w-5xl px-6 pb-12 pt-8 sm:px-8 sm:pt-12">
-      <div className="grid items-start gap-10 md:grid-cols-[minmax(0,1fr)_minmax(280px,0.9fr)] md:gap-14">
-        <article className="max-w-xl">
-          <h1 className="text-3xl font-bold leading-[1.12] tracking-tight sm:text-4xl">{profile.aboutTitle}</h1>
-          <div className="mt-5 space-y-4 text-sm leading-6 text-zinc-600 dark:text-zinc-300">
+    <div className="container-page pt-12 sm:pt-16 lg:pt-20">
+      <div className="grid gap-12 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] lg:gap-16">
+        <div>
+          <PageIntro eyebrow="About me" title={profile.aboutTitle} />
+          <div className="mt-8 max-w-2xl space-y-6 text-lg leading-relaxed text-stone-700 dark:text-stone-300">
             {profile.about.map((paragraph) => (
               <p key={paragraph}>{paragraph}</p>
             ))}
           </div>
-        </article>
+          <SocialLinks className="mt-8" />
+        </div>
+        <Photo className="mx-auto w-full max-w-sm lg:mt-4" priority />
+      </div>
 
-        <aside className="md:pt-1">
-          <Avatar size="lg" />
-          <nav aria-label="Social profiles" className="mt-5 space-y-3">
-            {socialLinks.map(({ key, label, href }) => (
-              <a
-                className="flex items-center gap-3 text-xs text-zinc-600 transition-colors hover:text-teal-600 dark:text-zinc-300 dark:hover:text-teal-300"
-                href={href}
-                key={key}
-                rel="noreferrer"
-                target="_blank"
-              >
-                {icons[key]}
-                Follow me on {label}
-              </a>
-            ))}
-          </nav>
+      <div className="mt-24 grid gap-14 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)] lg:gap-16">
+        <section aria-labelledby="experience-heading">
+          <p className="eyebrow">Experience</p>
+          <h2 className="mb-10 mt-3 font-display text-3xl font-semibold tracking-tight" id="experience-heading">
+            Where I&apos;ve worked
+          </h2>
+          <WorkTimeline />
+        </section>
 
-          <section className="mt-8">
-            <h2 className="text-sm font-semibold">Education</h2>
-            <ul className="mt-3 space-y-3">
+        <div className="space-y-8">
+          <section aria-labelledby="education-heading" className="card">
+            <h2 className="text-xl font-semibold" id="education-heading">
+              Education
+            </h2>
+            <ul className="mt-5 divide-y divide-stone-200 dark:divide-white/10">
               {education.map(({ name, detail, years }) => (
-                <li className="flex justify-between gap-4 text-xs" key={name}>
-                  <span>
-                    <span className="font-semibold">{name}</span>
-                    <span className="block text-zinc-500 dark:text-zinc-400">{detail}</span>
-                  </span>
-                  <span className="whitespace-nowrap text-zinc-400">{years}</span>
+                <li className="py-4 first:pt-0 last:pb-0" key={name}>
+                  <p className="font-semibold">{name}</p>
+                  <p className="text-stone-700 dark:text-stone-300">{detail}</p>
+                  <p className="mt-1 text-sm text-stone-500 dark:text-stone-400">{years}</p>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section className="mt-8">
-            <h2 className="text-sm font-semibold">Hobbies</h2>
-            <ul className="mt-3 flex flex-wrap gap-2">
+          <section aria-labelledby="hobbies-heading" className="card">
+            <h2 className="text-xl font-semibold" id="hobbies-heading">
+              When I&apos;m not working
+            </h2>
+            <ul className="mt-5 flex flex-wrap gap-2">
               {hobbies.map((hobby) => (
                 <li
-                  className="rounded-full bg-teal-50 px-3 py-1 text-[11px] text-teal-700 dark:bg-teal-400/10 dark:text-teal-200"
+                  className="rounded-full bg-teal-50 px-4 py-2 text-[0.95rem] font-medium text-teal-900 dark:bg-teal-300/10 dark:text-teal-100"
                   key={hobby}
                 >
                   {hobby}
@@ -65,7 +65,7 @@ export default function About() {
               ))}
             </ul>
           </section>
-        </aside>
+        </div>
       </div>
     </div>
   );
