@@ -16,7 +16,7 @@ export const profile = {
     "When I'm not working or studying, you'll find me western swing dancing, camping, doing crafts and art projects, or spending time with my family.",
   ],
   // To show a photo, add an image such as public/profile.jpg and set photo: "/profile.jpg".
-  photo: "/profile.jpg",
+  photo: "/profile.webp",
   links: {
     github: "https://github.com/mlc273",
     // Add your LinkedIn URL here to show a LinkedIn link, e.g. "https://www.linkedin.com/in/your-name/".
