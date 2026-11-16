@@ -5,7 +5,7 @@ import SocialLinks from "../components/SocialLinks.jsx";
 import { notes, profile, skills, work } from "../data/profile.js";
 
 export const metadata = {
-  title: "Home",
+  title: { absolute: `${profile.name} — Portfolio` },
   description: `Notes, projects, and ideas from ${profile.name}, a computer science student.`,
 };
 
