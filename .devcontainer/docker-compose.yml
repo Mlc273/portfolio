@@ -1,0 +1,31 @@
+# based on https://github.com/devcontainers/templates
+services:
+  app:
+    # Pull the image build-devcontainer.yml already published to GHCR instead
+    # of building from the Dockerfile. A `build:` + `cache_from` approach was
+    # tried first, but GitHub Codespaces' devcontainer CLI always wraps a
+    # `build:`-configured Dockerfile in its own synthetic multi-stage file
+    # (for feature injection, even with none declared here), which changes
+    # the build graph enough that BuildKit's cache never hits past `FROM` --
+    # confirmed via a real Codespace creation log reinstalling everything
+    # from scratch despite cache_from being set. Pulling the image directly
+    # sidesteps that wrapping entirely.
+    #
+    # Tradeoff: local Dockerfile edits no longer take effect in Codespaces
+    # until build-devcontainer.yml republishes this tag. Use
+    # `docker compose build` locally, or push a branch, to pick up changes.
+    image: ghcr.io/ensign-college/cs220-cc-01-devcontainer:latest
+    volumes:
+      # Mount the repo directly at /workspace, matching the Dockerfile's
+      # WORKDIR where dependencies and Playwright browsers are pre-installed,
+      # so the container starts with nothing left to install.
+      - ..:/workspace:cached
+      # node_modules is baked into the image at /workspace/node_modules.
+      # Without this, the bind mount above would shadow it with the host's
+      # own (likely absent) node_modules. Docker seeds a fresh named volume
+      # from the image's directory contents on first use.
+      - node_modules:/workspace/node_modules
+    command: sleep infinity
+
+volumes:
+  node_modules:

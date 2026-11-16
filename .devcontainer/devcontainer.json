@@ -1,0 +1,44 @@
+{
+  "name": "Node.js",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "waitFor": "onCreateCommand",
+  "updateContentCommand": "npm install",
+  "onCreateCommand": "sh .devcontainer/on-create.sh",
+  "postCreateCommand": "",
+  "postAttachCommand": {
+    "server": "npm run dev",
+    "setup": "npx playwright install chromium --with-deps"
+  },
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Application",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "biomejs.biome",
+        "bradlc.vscode-tailwindcss",
+        "csstools.postcss",
+        "dbaeumer.vscode-eslint",
+        "eamodio.gitlens",
+        "editorconfig.editorconfig",
+        "esbenp.prettier-vscode",
+        "firsttris.vscode-jest-runner",
+        "github.copilot",
+        "github.copilot-chat",
+        "GitHub.vscode-github-actions",
+        "ms-azuretools.vscode-docker",
+        "ms-playwright.playwright",
+        "ms-vsliveshare.vsliveshare",
+        "ortoni.ortoni",
+        "vitest.explorer",
+        "ZixuanChen.vitest-explorer"
+      ]
+    }
+  }
+}
